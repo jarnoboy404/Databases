@@ -1,5 +1,9 @@
 # Databases
-Easily create databases
+**Easily create databases**
+
+Installation **➞** [Installation](#installation)\
+Usage preparation **➞** [Usage Preparation](#usage-preparation)\
+Usage Examples **➞** [Usage Examples](#usage-examples)
 
 # Installation
 
