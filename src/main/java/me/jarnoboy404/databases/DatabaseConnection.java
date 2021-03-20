@@ -9,11 +9,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.CompletableFuture;
 
-public class Database {
+public class DatabaseConnection {
 
     private HikariDataSource ds;
 
-    public Database(String host, Integer port, String database, String username, String password, int maxPools) throws HikariPool.PoolInitializationException {
+    public DatabaseConnection(String host, Integer port, String database, String username, String password, int maxPools) throws HikariPool.PoolInitializationException {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://<host>:<port>/<database>"
                 .replaceAll("<host>", host)
@@ -36,8 +36,8 @@ public class Database {
         ds = new HikariDataSource(config);
     }
 
-    public Database(Database database) {
-        ds = database.getDataSource();
+    protected DatabaseConnection(DatabaseConnection databaseConnection) {
+        ds = databaseConnection.getDataSource();
     }
 
     protected void executeUpdate(String query) {
@@ -54,7 +54,7 @@ public class Database {
         try(Connection con = getDataSource().getConnection()) {
             PreparedStatement statement = con.prepareStatement(query);
 
-            return new DatabaseResult(statement.executeQuery());
+            return new DatabaseResult(statement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,7 +78,7 @@ public class Database {
             try(Connection con = getDataSource().getConnection()) {
                 PreparedStatement statement = con.prepareStatement(query);
 
-                return new DatabaseResult(statement.executeQuery());
+                return new DatabaseResult(statement);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

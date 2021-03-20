@@ -1,59 +1,43 @@
 package me.jarnoboy404.databases;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QueryParam {
 
-    private List<String> keys, values;
+    private Map<String, Object> keysAndValues;
     
     public QueryParam() {
-        keys = new ArrayList<>();
-        values = new ArrayList<>();
+        keysAndValues = new HashMap<>();
     }
     
-    public void addQueryParam(String key, String value) {
-        keys.add(key);
-        values.add(value);
-    }
-    
-    public String convertKeys() {
-        String query = "(";
-        for (String key : keys) {
-            if (query.equals("(")) {
-                query += "`" + key + "`";
-            } else {
-                query += ",`" + key + "`";
-            }
-        }
-        return query + ")";
+    public void addQueryParam(String key, Object value) {
+        keysAndValues.put(key, value);
     }
 
-    public String convertValues() {
-        String query = "(";
-        for (String value : values) {
-            if (query.equals("(")) {
-                query += "'" + value + "'";
-            } else {
-                query += ",'" + value + "'";
-            }
-        }
-        return query + ")";
-    }
-
-    public String convertKeysAndValues() {
+    public String getUpdateQuery(String table, QueryParam whereQuery) {
         String query = "";
-        for (int i = 0; i < keys.size(); i++) {
-            String value = "'" + values.get(i) + "'";
-            if(values.get(i) == null) value = null;
-
-            if(query.equals("")) {
-                query += " `" + keys.get(i) + "` = " + value;
-            }else {
-                query += ", `" + keys.get(i) + "` = " + value;
-            }
+        for(Map.Entry<String, Object> entry : keysAndValues.entrySet()) {
+            query += (query.equals("") ? "`" : ",`") + entry.getKey() + "`='" + entry.getValue() + "'";
         }
+        return "UPDATE `" + table + "` SET " + query + whereQuery.getWhereQuery();
+    }
 
-        return query;
+    public String getInsertQuery(String table) {
+        String keys = "";
+        String values = "";
+        for(Map.Entry<String, Object> entry : keysAndValues.entrySet()) {
+            keys += (keys.equals("") ? "`" : ",`") + entry.getKey() + "`";
+            values += (values.equals("") ? "'" : ",'") + entry.getValue() + "'";
+        }
+        return "INSERT INTO `" + table + "` (" + keys + ") VALUES (" + values + ")";
+    }
+
+    public String getWhereQuery() {
+        String query = "";
+        for(Map.Entry<String, Object> entry : keysAndValues.entrySet()) {
+            query += (query.equals("") ? "`" : " AND `") + entry.getKey() + "`='" + entry.getValue() + "'";
+        }
+        return " WHERE " + query;
     }
 }

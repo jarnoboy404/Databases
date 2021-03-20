@@ -1,15 +1,22 @@
 package me.jarnoboy404.databases;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseResult {
 
+    private PreparedStatement statement;
     private ResultSet resultSet;
 
-    public DatabaseResult(ResultSet resultSet) {
-        this.resultSet = resultSet;
+    public DatabaseResult(PreparedStatement statement) {
+        this.statement = statement;
+        try {
+            this.resultSet = statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean getResult() {
@@ -23,7 +30,8 @@ public class DatabaseResult {
 
     public void endResult() {
         try {
-            resultSet.close();
+            if(resultSet != null) if(!resultSet.isClosed()) resultSet.close();
+            if(statement != null) if(!statement.isClosed()) statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
