@@ -21,7 +21,7 @@ Maven:
   <dependency>
       <groupId>com.github.jarnoboy404</groupId>
       <artifactId>Databases</artifactId>
-      <version>2</version>
+      <version>2.0</version>
   </dependency>
 </dependencies>
 ```
@@ -36,7 +36,7 @@ allprojects {
 ```
 ```gradle
 dependencies {
-        implementation 'com.github.jarnoboy404:Databases:2'
+        implementation 'com.github.jarnoboy404:Databases:2.0'
 }
 ```
 # Usage preparation
