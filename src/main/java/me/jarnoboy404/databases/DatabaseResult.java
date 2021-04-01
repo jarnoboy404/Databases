@@ -63,15 +63,6 @@ public class DatabaseResult {
         }
         return null;
     }
-    
-    public Long getLong(Integer arg) {
-        try {
-            return resultSet.getLong(arg);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public String getString(String arg) {
         try {
