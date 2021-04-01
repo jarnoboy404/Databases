@@ -90,4 +90,58 @@ public class DatabaseResult {
         }
         return null;
     }
+
+    public Integer getInt(Integer arg) {
+        try {
+            return resultSet.getInt(arg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Double getDouble(Integer arg0) {
+        try {
+            return resultSet.getDouble(arg0);
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long getLong(Integer arg) {
+        try {
+            return resultSet.getLong(arg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getString(Integer arg) {
+        try {
+            return resultSet.getString(arg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean getBoolean(Integer arg) {
+        try {
+            return resultSet.getBoolean(arg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Date getDate(Integer arg) {
+        try {
+            return resultSet.getDate(arg);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
